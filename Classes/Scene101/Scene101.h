@@ -14,6 +14,7 @@ private:
 	cocos2d::Rect    rectReturn;
 
 	cocos2d::Sprite *_bean;
+	cocos2d::Rect   _rectbean;
 	float _ftime;
 	float _fangle;
 	bool _touch = false;
