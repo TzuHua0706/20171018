@@ -24,7 +24,8 @@ Scene102::Scene102()
 	_bTouched = false;
 	_felaptime = 0 ;
 	_fangle = 0;
-
+	b_touchbtn = false;
+	b_disable = false;
 }
 
 Scene102::~Scene102()
@@ -128,7 +129,9 @@ bool Scene102::init()
 	this->addChild(replaybtn, 1);
 
 	// add Cuber Button
-	this->cuberbtn = Sprite::createWithSpriteFrameName("cuberbtn1.png");
+	if (b_disable == false)  strcpy(this->c_cuberbtn, "cuberbtn1.png");
+	else strcpy(this->c_cuberbtn, "cuberbtn3.png");
+	this->cuberbtn = Sprite::createWithSpriteFrameName(c_cuberbtn);
 	size = cuberbtn->getContentSize();
 	this->cuberbtn->setPosition(Vec2(origin.x + visibleSize.width - size.width / 2, origin.y + visibleSize.height - size.height / 2 - 60));
 	pos = cuberbtn->getPosition();
@@ -172,7 +175,13 @@ bool  Scene102::onTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent)//�
 			i = i / 10;
 			j++;
 		}
-		label1->setString(_cSceneNo);
+		label1->setString(_cSceneNo); 
+		if (!b_disable) {
+			strcpy(this->c_cuberbtn, "cuberbtn2.png");
+			cuberbtn->setScale(1.2);
+			cuberbtn->setSpriteFrame(c_cuberbtn);
+			b_touchbtn = true;
+		}
 	}
 	if (rectReplay.containsPoint(touchLoc)) {
 
@@ -204,7 +213,6 @@ void  Scene102::onTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //�
 		Point pt = _bean->getPosition();
 		_bean->setPosition(pt + op);	
 		_tp = touchLoc;
-
 	}
 
 }
@@ -212,6 +220,13 @@ void  Scene102::onTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //�
 void  Scene102::onTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) //觸碰結束事件 
 {
 	Point touchLoc = pTouch->getLocation();
+	if (b_touchbtn && !b_disable) {
+		strcpy(this->c_cuberbtn, "cuberbtn1.png");
+		//this->returnbtn = Sprite::getSpriteFrame(c_cuberbtn);
+		cuberbtn->setScale(1);
+		cuberbtn->setSpriteFrame(c_cuberbtn);
+		b_touchbtn = false;
+	}
 	///	if (_rectBean.containsPoint(touchLoc)) { _bOnBean = false; }
 	if (_bOnBean) {
 		Point pt = _bean->getPosition();

@@ -18,15 +18,18 @@ private:
 	bool _bTouched = false;
 	float _felaptime;
 	float _fangle;
-	cocos2d::Sprite *_bean;
+	Sprite *_bean;
 	Rect    _rectBean;
 	bool    _bOnBean = false;
 	Point   _tp;
+	bool b_disable;
+	bool b_touchbtn;
 
-	cocos2d::Rect    rectBean;
+	Rect    rectBean;
 	int  _sceneno;
 	char _cSceneNo[10];
-	cocos2d::Label *label1;
+	Label *label1;
+	char c_cuberbtn[20];
 
 public:
 	Scene102();
